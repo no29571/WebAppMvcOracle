@@ -38,6 +38,11 @@ namespace WebAppMvc.Data
 
             //https://learn.microsoft.com/ja-jp/ef/core/modeling/relationships
             //https://learn.microsoft.com/ja-jp/ef/core/modeling/keys?tabs=fluent-api
+
+            //複合主キー
+            modelBuilder.Entity<LessonStudent>()
+                .HasKey(mdl => new { mdl.LessonId, mdl.StudentId });
+
             //リレーション
             modelBuilder.Entity<Student>()
                 .HasOne(student => student.Department1)
@@ -54,5 +59,6 @@ namespace WebAppMvc.Data
         public DbSet<WebAppMvc.Models.Lesson> Lesson { get; set; } = default!;
         public DbSet<WebAppMvc.Models.Department> Department { get; set; } = default!;
         public DbSet<WebAppMvc.Models.Student> Student { get; set; } = default!;
+        public DbSet<WebAppMvc.Models.LessonStudent> LessonStudent { get; set; } = default!;
     }
 }
