@@ -6,3 +6,62 @@
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
+
+<h2>1. Oracleで個別のアカウントを使用する</h2>
+<div>
+    <a href="https://github.com/no29571/WebAppMvcOracle/tree/ex-oracle">GitHub：ex-oracle</a>
+</div>
+<ol>
+    <li>Visual Studio Community</li>
+    <li>ファイル - 新規作成 - プロジェクト - ASP.NET Core Webアプリ（MVC）</li>
+    <li>認証の種類「個別のアカウント」</li>
+    <li>作成</li>
+</ol>
+<ol>
+    <li>ツール - NuGetパッケージマネージャ - ソリューションのNuGetパッケージの管理</li>
+    <li>【追加でインストールする】Oracle.EntityFrameworkCore</li>
+    <li>【必要に応じてバージョン調整（更新プログラムのインストール）】</li>
+    <li>Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore</li>
+    <li>Microsoft.AspNetCore.Identity.EntityFrameworkCore</li>
+    <li>Microsoft.AspNetCore.Identity.UI</li>
+    <li>Microsoft.EntityFrameworkCore.SqlServer</li>
+    <li>Microsoft.EntityFrameworkCore.Tools</li>
+    <li>【後で自動追加される】Microsoft.VisualStudio.Web.CodeGeneration.Design</li>
+</ol>
+<ol>
+    <li>Programs.cs「UseSqlServer」→「UseOracle」</li>
+    <li>appsettings.json「ConnectionStrings」変更</li>
+</ol>
+<pre>
+--sqlplus system/password@localhost:1521/XEPDB1
+CREATE USER ex_vs
+IDENTIFIED BY "example"
+DEFAULT TABLESPACE users
+TEMPORARY TABLESPACE temp;
+
+GRANT dba TO ex_vs;
+</pre>
+<ol>
+    <li>Data/Migrations配下のcsファイルを削除（SQLServer用のため）</li>
+    <li>表示 - その他のウィンドウ - パッケージマネージャーコンソール</li>
+    <li>（省略）Enable-Migrations</li>
+    <li>Add-Migration XXX</li>
+    <li>Update-Database</li>
+</ol>
+<ol>
+    <li>_EFMigrationsHistory</li>
+    <li>AspNetRoleClaims</li>
+    <li>AspNetRoles</li>
+    <li>AspNetUserClaims</li>
+    <li>AspNetUserLogins</li>
+    <li>AspNetUserRoles</li>
+    <li>AspNetUsers</li>
+    <li>AspNetUserTokens</li>
+    <li>※ SQLではテーブル名を「"」で囲む</li>
+</ol>
+<ol>
+    <li>Views/Shared/_Layout.cshtml「html lang="en"」→「html lang="ja"」</li>
+    <li>「IIS Express」を選択して実行</li>
+    <li>test@example.com</li>
+    <li>AUVY.cRwef:JMH2</li>
+</ol>
