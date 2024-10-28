@@ -10,10 +10,12 @@ namespace WebAppMvc.Models
     {
         /* ApplicationDbContextで複合主キーを定義） */
         [Column("lesson_id")]
+        [Remote(action: "UniqueKey", controller: "LessonStudents", AdditionalFields = nameof(StudentId))]
         public int LessonId { get; set; }
         public Lesson? Lesson { get; set; }
 
         [Column("student_id")]
+        [Remote(action: "UniqueKey", controller: "LessonStudents", AdditionalFields = nameof(LessonId))]
         public int StudentId { get; set; }
         public Student? Student { get; set; }
 

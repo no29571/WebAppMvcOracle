@@ -172,5 +172,17 @@ namespace WebAppMvc.Controllers
         {
             return _context.LessonStudent.Any(e => e.LessonId == LessonId && e.StudentId == StudentId);
         }
+
+        //https://learn.microsoft.com/ja-jp/aspnet/core/mvc/models/validation?view=aspnetcore-8.0
+        [AcceptVerbs("GET", "POST")]
+        public IActionResult UniqueKey(int LessonId, int StudentId)
+        {
+            if (LessonStudentExists(LessonId, StudentId))
+            {
+                return Json("This data already exists.");
+            }
+
+            return Json(true);
+        }
     }
 }

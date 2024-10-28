@@ -7,6 +7,31 @@
     <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
 
+<h2>5. モデルの検証</h2>
+<div>
+    <a href="https://github.com/no29571/WebAppMvcOracle/tree/ex-validation">GitHub：ex-validation</a>
+</div>
+<ol>
+    <li>モデルクラス（Department.cs）のフィールドに組み込みの検証属性を設定</li>
+</ol>
+<ol>
+    <li>コントローラークラス（DepartmentsController.cs）にリモート検証用のアクションメソッドを追加</li>
+    <li>モデルクラス（Department.cs）のフィールドにリモート検証属性を設定</li>
+</ol>
+<ol>
+    <li>コントローラークラス（LessonStudentsController.cs）にリモート検証用のアクションメソッドを追加</li>
+    <li>モデルクラス（LessonStudent.cs）のフィールドに追加フィールドのあるリモート検証属性を設定</li>
+    <li>検証結果出力用のspanがなければ追加</li>
+</ol>
+<ol>
+    <li>カスタム検証属性クラス（Validation/MaxByteLengthAttribute.cs）を作成</li>
+    <li>※ DBは文字数制限なのでバイト数チェックは不要（OracleのVACHAR2の場合は必要）</li>
+    <li>モデルクラス（Student.cs）のフィールドにカスタム検証属性を設定</li>
+</ol>
+<ol>
+    <li>モデルクラス（Lesson.cs）にIValidatableObjectを実装する</li>
+</ol>
+
 <h2>4. 複合主キー</h2>
 <div>
     <a href="https://github.com/no29571/WebAppMvcOracle/tree/ex-key">GitHub：ex-key</a>

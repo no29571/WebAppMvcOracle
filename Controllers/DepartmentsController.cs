@@ -155,5 +155,16 @@ namespace WebAppMvc.Controllers
         {
             return _context.Department.Any(e => e.Id == id);
         }
+
+        //https://learn.microsoft.com/ja-jp/aspnet/core/mvc/models/validation?view=aspnetcore-8.0
+        [AcceptVerbs("GET", "POST")]
+        public IActionResult UniqueKey(string id)
+        {
+            if (DepartmentExists(id))
+            {
+                return Json($"'{id}' is already in use.");
+            }
+            return Json(true);
+        }
     }
 }

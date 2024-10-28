@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using WebAppMvc.Validation;
 
 namespace WebAppMvc.Models
 {
@@ -16,6 +17,7 @@ namespace WebAppMvc.Models
 
         [Column("info")]
         [MaxLength(100)]
+        [MaxByteLength(10)]
         public string? Info { get; set; }
 
         /* ApplicationDbContextでリレーションを定義 */

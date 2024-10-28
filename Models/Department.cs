@@ -9,6 +9,8 @@ namespace WebAppMvc.Models
     {
         [Column("id")]
         [MaxLength(5)]
+        [RegularExpression(@"[a-zA-Z0-9]+")]//, ErrorMessage = "半角英数字のみ"
+        [Remote(action: "UniqueKey", controller: "Departments")]
         public string Id { get; set; }
 
         [Column("name")]
