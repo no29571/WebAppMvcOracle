@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Oracle.EntityFrameworkCore.Metadata;
 using WebAppMvc.Data;
@@ -11,9 +12,11 @@ using WebAppMvc.Data;
 namespace WebAppMvc.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241028045054_Department")]
+    partial class Department
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -288,51 +291,6 @@ namespace WebAppMvc.Migrations
                     b.ToTable("lesson");
                 });
 
-            modelBuilder.Entity("WebAppMvc.Models.Student", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("NUMBER(10)")
-                        .HasColumnName("id");
-
-                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime?>("CreatedAt")
-                        .HasColumnType("TIMESTAMP(7)")
-                        .HasColumnName("created_at");
-
-                    b.Property<string>("Department1Id")
-                        .HasColumnType("NVARCHAR2(5)")
-                        .HasColumnName("dept1_id");
-
-                    b.Property<string>("Department2Id")
-                        .HasColumnType("NVARCHAR2(5)")
-                        .HasColumnName("dept2_id");
-
-                    b.Property<string>("Info")
-                        .HasMaxLength(100)
-                        .HasColumnType("NVARCHAR2(100)")
-                        .HasColumnName("info");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("NVARCHAR2(30)")
-                        .HasColumnName("name");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("TIMESTAMP(7)")
-                        .HasColumnName("updated_at");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Department1Id");
-
-                    b.HasIndex("Department2Id");
-
-                    b.ToTable("student");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -382,28 +340,6 @@ namespace WebAppMvc.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("WebAppMvc.Models.Student", b =>
-                {
-                    b.HasOne("WebAppMvc.Models.Department", "Department1")
-                        .WithMany("Students1")
-                        .HasForeignKey("Department1Id");
-
-                    b.HasOne("WebAppMvc.Models.Department", "Department2")
-                        .WithMany("Students2")
-                        .HasForeignKey("Department2Id");
-
-                    b.Navigation("Department1");
-
-                    b.Navigation("Department2");
-                });
-
-            modelBuilder.Entity("WebAppMvc.Models.Department", b =>
-                {
-                    b.Navigation("Students1");
-
-                    b.Navigation("Students2");
                 });
 #pragma warning restore 612, 618
         }
