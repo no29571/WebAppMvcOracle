@@ -7,6 +7,38 @@
     <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
 
+<h2>2. CRUDのスキャフォールディング</h2>
+<div>
+    <a href="https://github.com/no29571/WebAppMvcOracle/tree/ex-crud">GitHub：ex-crud</a>
+</div>
+<ol>
+    <li>Modulesフォルダで「追加（クラス - インターフェイス）」</li>
+    <li>更新日時を共通項目として定義（IHasTimestamps.cs）</li>
+    <li>ApplicationDbContextクラスに更新日時設定の処理を追加</li>
+</ol>
+<ol>
+    <li>Modulesフォルダで「追加（クラス）」</li>
+    <li>モデルクラスにフィールドを定義</li>
+    <li>モデルクラスにIHasTimestampsを実装</li>
+    <li>Controllersフォルダで「追加（新規スキャフォールディングアイテム）」</li>
+    <li>「Entity Frameworkを使用したビューがあるMVCコントローラー」</li>
+    <li>モデルクラスとDbContextクラスを選択</li>
+    <li>追加</li>
+    <li>※ 新規DbContextクラスの場合は、ここでデータベースプロバイダーを指定するとDB接続が設定される</li>
+</ol>
+<ol>
+    <li>Create.cshtmlとEdit.cshtmlでの更新日時の入力は不要のため調整</li>
+    <li>コントローラークラスにアクセス制限[Authorize]を設定</li>
+    <li>Views/Shared/_Layout.cshtmlに「nav-item」を追加（ヘッダーメニューにリンクを追加）</li>
+</ol>
+<ol>
+    <li>ApplicationDbContextクラスに追加されたモデルをマイグレーションでDBに反映</li>
+    <li>※ 他にフィールドの追加・削除あればあわせてマイグレーション</li>
+    <li>パッケージマネージャーコンソール</li>
+    <li>Add-Migration XXX</li>
+    <li>Update-Database</li>
+</ol>
+
 <h2>1. Oracleで個別のアカウントを使用する</h2>
 <div>
     <a href="https://github.com/no29571/WebAppMvcOracle/tree/ex-oracle">GitHub：ex-oracle</a>
