@@ -1,0 +1,43 @@
+﻿@{
+    //検索条件の維持
+    TempData["FindName"] = ViewData["FindName"];
+    TempData["FindInfo"] = ViewData["FindInfo"];
+    TempData["FindDepartment1"] = ViewData["FindDepartment1"];
+    TempData["FindDepartment2"] = ViewData["FindDepartment2"];
+
+    var FindName = ViewData["FindName"];
+    var FindInfo = ViewData["FindInfo"];
+    var FindDepartment1 = ViewData["FindDepartment1"];
+    var FindDepartment2 = ViewData["FindDepartment2"];
+}
+
+<div class="collapse show" id="collapse1">
+    <form asp-action="Search">
+        <div class="row">
+            <div class="col form-group">
+                <label asp-for="@FindName" class="control-label">Name</label>
+                <input type="text" asp-for="@FindName" class="form-control" />
+            </div>
+            <div class="col form-group">
+                <label asp-for="@FindInfo" class="control-label">Info</label>
+                <input type="text" asp-for="@FindInfo" class="form-control" />
+            </div>
+            <div class="col form-group">
+                <label asp-for="@FindDepartment1" class="control-label">Department1</label>
+                <select asp-for="@FindDepartment1" class="form-control" asp-items="ViewBag.DepartmentList">
+                    <option value="">選択してください</option>
+                </select>
+            </div>
+            <div class="col form-group">
+                <label asp-for="@FindDepartment2" class="control-label">Department2</label>
+                <select asp-for="@FindDepartment2" class="form-control" asp-items="ViewBag.DepartmentList">
+                    <option value="">選択してください</option>
+                </select>
+            </div>
+
+            <div class="col-1 form-group align-self-end text-right">
+                <input type="submit" value="検索実行" class="btn btn-primary" id="grid-basic-btn" />
+            </div>
+        </div>
+    </form>
+</div>

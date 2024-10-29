@@ -21,11 +21,122 @@ namespace WebAppMvc.Controllers
             _context = context;
         }
 
+        /// <summary>
+        /// ViewData設定
+        /// </summary>
+        private void SetViewData()
+        {
+            //タイトル
+            ViewData["Title"] = "Student";
+
+            //ドロップダウンリスト
+            ViewData["DepartmentList"] = new SelectList(_context.Department, "Id", "Name");
+
+            //検索条件の維持
+            ViewData["FindName"] = TempData["FindName"];
+            ViewData["FindInfo"] = TempData["FindInfo"];
+            ViewData["FindDepartment1"] = TempData["FindDepartment1"];
+            ViewData["FindDepartment2"] = TempData["FindDepartment2"];
+        }
+
+        /// <summary>
+        /// 検索条件設定
+        /// </summary>
+        /// <param name="FindName"></param>
+        /// <param name="FindInfo"></param>
+        /// <param name="FindDepartment1"></param>
+        /// <param name="FindDepartment2"></param>
+        /// <returns></returns>
+        private IQueryable<Student> GetQuery(string? FindName, string? FindInfo, string? FindDepartment1, string? FindDepartment2)
+        {
+            //参考：スキャフォールディングのIndexメソッド
+            //var applicationDbContext = _context.Student.Include(s => s.Department1).Include(s => s.Department2);
+            //return View(await applicationDbContext.ToListAsync());
+
+            IQueryable<Student> query = _context.Student
+                .Include(mdl => mdl.Department1)
+                .Include(mdl => mdl.Department2)
+                .OrderBy(mdl => mdl.Department1Id)
+                .ThenBy(mdl => mdl.Id);
+
+            if (FindName != null)
+            {
+                query = query.Where(mdl => mdl.Name.Contains(FindName));
+            }
+            if (FindInfo != null)
+            {
+                query = query.Where(mdl => mdl.Info.Contains(FindInfo));
+            }
+            if (FindDepartment1 != null)
+            {
+                query = query.Where(mdl => mdl.Department1Id == FindDepartment1);
+            }
+            if (FindDepartment2 != null)
+            {
+                query = query.Where(mdl => mdl.Department2Id == FindDepartment2);
+            }
+            return query;
+        }
+
+        /// <summary>
+        /// メニューから遷移
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IActionResult> Init()
+        {
+            //TempDataをクリア
+            TempData.Clear();
+
+            //ViewData設定
+            SetViewData();
+
+            //０件で返却
+            IQueryable<Student> query = _context.Student
+                .OrderBy(mdl => mdl.Department1Id)
+                .ThenBy(mdl => mdl.Id)
+                .Take(0);
+            return View("Index", await query.ToListAsync());
+        }
+
+        /// <summary>
+        /// 検索
+        /// </summary>
+        /// <param name="FindName"></param>
+        /// <param name="FindInfo"></param>
+        /// <param name="FindDepartment1"></param>
+        /// <param name="FindDepartment2"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<IActionResult> Search(string? FindName, string? FindInfo, string? FindDepartment1, string? FindDepartment2)
+        {
+            //検索条件の維持
+            TempData["FindName"] = FindName;
+            TempData["FindInfo"] = FindInfo;
+            TempData["FindDepartment1"] = FindDepartment1;
+            TempData["FindDepartment2"] = FindDepartment2;
+
+            //ViewData設定
+            SetViewData();
+
+            //検索
+            IQueryable<Student> query = GetQuery(FindName, FindInfo, FindDepartment1, FindDepartment2);
+            return View("Index", await query.ToListAsync());
+        }
+
         // GET: Students
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Student.Include(s => s.Department1).Include(s => s.Department2);
-            return View(await applicationDbContext.ToListAsync());
+            //ViewData設定
+            SetViewData();
+
+            //検索
+            string? FindName = (string?)TempData["FindName"];
+            string? FindInfo = (string?)TempData["FindInfo"];
+            string? FindDepartment1 = (string?)TempData["FindDepartment1"];
+            string? FindDepartment2 = (string?)TempData["FindDepartment2"];
+
+            IQueryable<Student> query = GetQuery(FindName, FindInfo, FindDepartment1, FindDepartment2);
+            return View("Index", await query.ToListAsync());
         }
 
         // GET: Students/Details/5
